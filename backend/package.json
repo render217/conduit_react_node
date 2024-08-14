@@ -4,10 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "npx tsc",
+        "build": "tsc",
         "start": "node dist/index.js",
         "dev": "nodemon src/index.ts",
-        "seed": "npx ts-node src/prisma/seed.ts"
+        "seed": "ts-node src/prisma/seed.ts"
     },
     "prisma": {
         "schema": "src/prisma/schema.prisma"
