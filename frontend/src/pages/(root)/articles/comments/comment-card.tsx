@@ -25,8 +25,9 @@ export default function CommentCard({
     const handleDeleteComment = async () => {
         if (isPending || !isAuthor) return;
         try {
-            const { data } = await deleteCommentAsync(comment.id.toString());
-            console.log(data);
+            await deleteCommentAsync(comment.id.toString());
+            // const { data } = await deleteCommentAsync(comment.id.toString());
+            // console.log(data);
             toast.success("successfully deleted comment");
         } catch (error) {
             handleError(error);

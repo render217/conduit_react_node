@@ -16,7 +16,7 @@ import Pagination from "../../../components/shared/pagination";
 
 export default function ArtilceList({ activeTab }: { activeTab: ITab }) {
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(5);
+    const [itemPerPage, _] = useState(5);
 
     const query = getActiveTabQuery(activeTab);
     // const query = getActiveTabQueryWithPagination(activeTab, 1);

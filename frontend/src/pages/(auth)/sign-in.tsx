@@ -38,9 +38,9 @@ export default function SignIn() {
         try {
             const { data } = await loginAsync(values);
 
-            console.group("login-response");
-            console.log("successfully logged in", { data });
-            console.groupEnd();
+            // console.group("login-response");
+            // console.log("successfully logged in", { data });
+            // console.groupEnd();
 
             navigate(location.state?.location ?? "/");
             setUser(data?.user);

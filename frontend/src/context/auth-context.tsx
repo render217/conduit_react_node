@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { articleService, userService } from "../services";
+import { userService } from "../services";
 import Cookies from "js-cookie";
-import { set } from "react-hook-form";
+
 export type IUser = {
     id: string;
     email: string;
@@ -16,12 +15,7 @@ export type IUser = {
 
 type IAuthContext = {
     user?: IUser;
-    // login: (payload: { email: string; password: string }) => Promise<void>;
-    // register: (payload: {
-    //     email: string;
-    //     password: string;
-    //     username: string;
-    // }) => Promise<void>;
+
     setUser: (user: IUser) => void;
     logout: () => Promise<void>;
     isLoggedIn: boolean;
@@ -58,7 +52,7 @@ export default function AuthProvider({
             .finally(() => {
                 setIsLoadingUser(false);
             });
-    }, []);
+    }, [location.state?.location, navigate]);
 
     const logout = async () => {
         Cookies.remove("con_token");

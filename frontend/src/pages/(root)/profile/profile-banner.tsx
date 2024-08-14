@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Minus, Plus, Settings } from "lucide-react";
 import { IProfile } from "../../../types";
 import { useAuth } from "../../../context/auth-context";
@@ -14,16 +13,15 @@ import ProfileImage from "../../../components/ui/profile-image";
 
 export default function ProfileBanner({
     profile,
-    username,
 }: {
     profile: IProfile;
-    username: string;
+    username?: string;
 }) {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { user } = useAuth();
     const isSelf = profile.id.toString() === user?.id.toString();
-    const targetId = profile.id.toString();
+    // const targetId = profile.id.toString();
 
     const { mutateAsync: followUserAsync, isPending: isFollowPending } =
         useFollowUser();
@@ -35,7 +33,7 @@ export default function ProfileBanner({
     const handleFollowUnFollow = async () => {
         const targetFn = isFollowed ? unFollowUserAsync : followUserAsync;
         try {
-            const { data } = await targetFn(profile.username);
+            await targetFn(profile.username);
 
             const toastMsg = isFollowed
                 ? "Successfully unfollowed"
@@ -56,13 +54,6 @@ export default function ProfileBanner({
                 <div className="max-w-[900px] mx-auto w-full">
                     <div className="flex flex-col gap-2 text-center justify-center ">
                         <div className="h-20 w-20 mx-auto rounded-full overflow-hidden">
-                            {/* <img
-                                className="object-cover w-full"
-                                src={
-                                    "https://api.realworld.io/images/smiley-cyrus.jpeg"
-                                }
-                                alt=""
-                            /> */}
                             <ProfileImage image={profile.image} />
                         </div>
                         <h1 className="text-2xl font-titilliumWeb font-bold text-black">

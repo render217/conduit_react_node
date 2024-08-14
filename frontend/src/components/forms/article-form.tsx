@@ -32,7 +32,7 @@ export default function ArticleForm() {
             const tagList = values.tag.trim().split(",");
             const payload = { ...values, tagList, tag: undefined };
             const { data } = await createArticleAsync(payload);
-            console.log("newArticle", data);
+            // console.log("newArticle", data);
             toast.success("Successfully created article");
             navigate(`/articles/${data?.article?.slug}`);
             reset();

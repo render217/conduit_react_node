@@ -52,7 +52,8 @@ export default function EditArticleForm() {
             const tagList = values.tag.trim().split(",");
             const payload = { ...values, tagList, tag: undefined };
             const { data } = await updateArticleAsync(payload);
-            console.log("updated", data);
+
+            // console.log("updated", data);
             toast.success("Successfully updated article");
             navigate(`/articles/${data?.article?.slug}`);
             reset();

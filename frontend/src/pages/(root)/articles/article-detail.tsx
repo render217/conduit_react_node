@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Edit, Heart, Minus, Plus, Trash2 } from "lucide-react";
 import { IArticle } from "../../../types";
 import CommentForm from "../../../components/forms/comment-form";
@@ -23,7 +22,7 @@ import {
 import { handleError } from "../../../utils/errorUtils";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import LoadingSpinner from "../../../components/ui/loaders/loading-spineer";
+
 import PageLoader from "../../../components/ui/loaders/page-loader";
 import ErrorMessage from "../../../components/ui/error-message";
 
@@ -38,35 +37,35 @@ export default function ArticleDetail() {
         data: responseData,
         isLoading,
         isError,
-        refetch: refetchArticle,
     } = useGetArticle(articleSlug);
 
     const article = responseData?.data?.article as IArticle;
 
-    const { mutateAsync: followUserAsync, isPending: isFollowUserending } =
-        useFollowUser();
+    const {
+        mutateAsync: followUserAsync,
 
-    const { mutateAsync: unFollowUserAsync, isPending: isUnFollowUserPending } =
-        useUnFollowUser();
+        // isPending: isFollowUserending,
+    } = useFollowUser();
+
+    const {
+        mutateAsync: unFollowUserAsync,
+        // isPending: isUnFollowUserPending
+    } = useUnFollowUser();
 
     const {
         mutateAsync: favoriteArticleAsync,
-        isPending: isFavoriteArticlePending,
+        // isPending: isFavoriteArticlePending,
     } = useFavoriteArticle();
 
     const {
         mutateAsync: unFavoriteArticleAsync,
-        isPending: isUnFavoriteArticlePending,
+        // isPending: isUnFavoriteArticlePending,
     } = useUnFavoriteArticle();
 
     const {
         mutateAsync: deleteArticleAsync,
-        isPending: isDeleteArticlePending,
+        // isPending: isDeleteArticlePending,
     } = useDeleteArticle();
-
-    if (isLoading) return <PageLoader />;
-    if (isError) return <ErrorMessage />;
-    if (!article) return <p>Article not found</p>;
 
     const isSelf = user?.id.toString() === article?.author.id.toString();
     const isFollowed = article?.author.following;
@@ -122,6 +121,10 @@ export default function ArticleDetail() {
             handleError(error);
         }
     };
+
+    if (isLoading) return <PageLoader />;
+    if (isError) return <ErrorMessage />;
+    if (!article) return <p>Article not found</p>;
 
     const authorImage =
         article.author.image !== "" ? article.author.image : "/profile.png";

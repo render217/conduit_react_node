@@ -34,11 +34,11 @@ export default function SignUp() {
 
     const onSubmit = async (values: FormData) => {
         try {
-            const { data } = await registerAsync(values);
-
-            console.group("register-response");
-            console.log("successfully register", data);
-            console.groupEnd();
+            await registerAsync(values);
+            // const { data } = await registerAsync(values);
+            // console.group("register-response");
+            // console.log("successfully register", data);
+            // console.groupEnd();
 
             toast.success("Successfully signed up.");
             navigate("/login");

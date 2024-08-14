@@ -31,10 +31,11 @@ export default function CommentForm({ articleSlug }: { articleSlug: string }) {
         useCreateComment(articleSlug);
 
     const onSubmit = async (values: FormData) => {
-        console.log(values);
+        // console.log(values);
         try {
-            const { data } = await createCommentAsync(values);
-            console.log({ data });
+            await createCommentAsync(values);
+            // const { data } = await createCommentAsync(values);
+            // console.log({ data });
             reset();
             toast.success("successfully submitted comment");
         } catch (error) {

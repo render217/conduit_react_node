@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import Banner from "./banner";
 
@@ -70,18 +69,20 @@ export default function Home() {
                     <div className="md:col-span-2 bg-clrHarp p-2 space-y-2 rounded-md h-fit">
                         <p className="text-clrDoveGrey">Popular Tags</p>
                         <div className="   rounded-md pb-4 flex flex-wrap gap-2 items-start">
-                            {tags.map((tag) => {
-                                return (
-                                    <p
-                                        onClick={() =>
-                                            handleSelectTag(tag.name)
-                                        }
-                                        key={tag.name}
-                                        className="text-xs border border-clrDoveGrey rounded-full w-fit px-2 py-0.5 text-white cursor-pointer bg-clrOsloGrey hover:bg-clrDoveGrey">
-                                        {tag.name} ({tag.count})
-                                    </p>
-                                );
-                            })}
+                            {isLoading && <p>Loading...</p>}
+                            {!isLoading &&
+                                tags.map((tag) => {
+                                    return (
+                                        <p
+                                            onClick={() =>
+                                                handleSelectTag(tag.name)
+                                            }
+                                            key={tag.name}
+                                            className="text-xs border border-clrDoveGrey rounded-full w-fit px-2 py-0.5 text-white cursor-pointer bg-clrOsloGrey hover:bg-clrDoveGrey">
+                                            {tag.name} ({tag.count})
+                                        </p>
+                                    );
+                                })}
                         </div>
                     </div>
                 </div>

@@ -43,9 +43,10 @@ export default function SettingForm({ profile }: { profile: IUser }) {
     const onSubmit = async (values: FormData) => {
         try {
             const payload = { user: { ...values } };
-            const { data } = await updateUserAsync(payload);
+            await updateUserAsync(payload);
+            // const { data } = await updateUserAsync(payload);
 
-            console.log("successfulyy updated user", data);
+            // console.log("successfulyy updated user", data);
             toast.success("Successfully updated user");
         } catch (error) {
             handleError(error);

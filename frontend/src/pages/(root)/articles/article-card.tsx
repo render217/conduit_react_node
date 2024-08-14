@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Heart } from "lucide-react";
 import { IArticle } from "../../../types";
 import { Link } from "react-router-dom";
@@ -69,6 +68,10 @@ export default function ArticleCard({ article }: ArticleCardProps) {
                 </div>
                 <div>
                     <button
+                        disabled={
+                            isFavoriteArticlePending ||
+                            isUnFavoriteArticlePending
+                        }
                         onClick={handleFavorite}
                         className={cn(
                             " hover:bg-clrTurtleGreen/80 hover:text-white px-2 rounded-sm py-1 text-sm flex gap-1 items-center text-white justify-center border",

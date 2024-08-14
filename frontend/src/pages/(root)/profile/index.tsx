@@ -12,7 +12,7 @@ import { TAB_TYPE_ENUM } from "../../../utils/constants";
 
 export default function Profile() {
     const params = useParams();
-    console.log({ params });
+    // console.log({ params });
     const username = (params.username as string) || "";
     const { user } = useAuth();
 
