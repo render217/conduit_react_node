@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { userService } from "../services";
 import Cookies from "js-cookie";
+import PageLoading from "../components/shared/loaders";
 
 export type IUser = {
     id: string;
@@ -15,7 +17,6 @@ export type IUser = {
 
 type IAuthContext = {
     user?: IUser;
-
     setUser: (user: IUser) => void;
     logout: () => Promise<void>;
     isLoggedIn: boolean;
@@ -30,29 +31,27 @@ export default function AuthProvider({
 }: {
     children: React.ReactNode;
 }) {
-    const [isLoadingUser, setIsLoadingUser] = useState(false);
+    const [isLoadingUser, setIsLoadingUser] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<IUser>();
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
-        setIsLoadingUser(true);
         userService
             .getCurrentUser()
             .then((res) => {
                 setUser(res?.data);
                 setIsLoggedIn(true);
-                navigate(location.state?.location);
+                navigate({ pathname: location.state?.location });
             })
-            .catch((error) => {
-                console.log(error);
+            .catch((_) => {
                 setIsLoggedIn(false);
             })
             .finally(() => {
                 setIsLoadingUser(false);
             });
-    }, [location.state?.location, navigate]);
+    }, []);
 
     const logout = async () => {
         Cookies.remove("con_token");
@@ -70,7 +69,7 @@ export default function AuthProvider({
                 isLoggedIn,
                 setIsLoggedIn,
             }}>
-            {isLoadingUser ? null : children}
+            {isLoadingUser ? <PageLoading /> : children}
         </AuthContext.Provider>
     );
 }

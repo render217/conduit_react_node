@@ -3,10 +3,12 @@ import Cookies from "js-cookie";
 // const DEV_URL = "http://localhost:4000/api";
 const PROD_URL = import.meta.env.VITE_BACKEND_URI;
 
-console.log(PROD_URL);
 const api = axios.create({
     baseURL: PROD_URL,
     withCredentials: true,
+});
+export const agent = axios.create({
+    baseURL: PROD_URL,
 });
 
 api.interceptors.request.use(

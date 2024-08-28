@@ -9,7 +9,8 @@ import { handleError } from "../../utils/errorUtils";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { IArticle } from "../../types";
-import PageLoader from "../ui/loaders/page-loader";
+
+import { LoaderCircle } from "lucide-react";
 type FormData = {
     title: string;
     description: string;
@@ -61,7 +62,13 @@ export default function EditArticleForm() {
             handleError(error);
         }
     };
-    if (isLoading || !article) return <PageLoader />;
+    if (isLoading || !article) {
+        return (
+            <div className="size-full min-h-[50vh] grid place-content-center">
+                <LoaderCircle className="animate-spin text-clrTurtleGreen" />
+            </div>
+        );
+    }
 
     return (
         <form

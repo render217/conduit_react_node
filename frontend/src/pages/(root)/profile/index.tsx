@@ -4,11 +4,12 @@ import ArtilceList from "../articles/article-list";
 
 import { useParams } from "react-router-dom";
 import { useGetProfile } from "../../../services/queryhooks/user.hooks";
-import PageLoader from "../../../components/ui/loaders/page-loader";
+
 import { IProfile, ITab } from "../../../types";
 import TabItem from "../../../components/ui/tabs/tab-item";
 import { useAuth } from "../../../context/auth-context";
 import { TAB_TYPE_ENUM } from "../../../utils/constants";
+import { LoaderCircle } from "lucide-react";
 
 export default function Profile() {
     const params = useParams();
@@ -63,8 +64,8 @@ export default function Profile() {
 
     if (isLoading) {
         return (
-            <div className="">
-                <PageLoader />
+            <div className="grid place-content-center min-h-[200px]">
+                <LoaderCircle className="animate-spin text-clrTurtleGreen" />
             </div>
         );
     }

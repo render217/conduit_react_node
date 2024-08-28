@@ -5,6 +5,8 @@ import * as yup from "yup";
 import { useRegister } from "../../services/queryhooks/user.hooks";
 import { handleError } from "../../utils/errorUtils";
 import { toast } from "react-toastify";
+import { cn } from "../../utils";
+import { LoaderCircle } from "lucide-react";
 
 type FormData = {
     username: string;
@@ -33,6 +35,7 @@ export default function SignUp() {
     const { mutateAsync: registerAsync, isPending } = useRegister();
 
     const onSubmit = async (values: FormData) => {
+        if (isPending) return;
         try {
             await registerAsync(values);
             // const { data } = await registerAsync(values);
@@ -65,6 +68,7 @@ export default function SignUp() {
                             Username
                         </label>
                         <input
+                            disabled={isPending}
                             className="border border-gray-300  py-2 h-10 w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
                             placeholder="Username"
                             {...register("username")}
@@ -80,6 +84,7 @@ export default function SignUp() {
                             Email
                         </label>
                         <input
+                            disabled={isPending}
                             className="border border-gray-300  py-2 h-10 w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
                             placeholder="Email"
                             type="email"
@@ -96,6 +101,7 @@ export default function SignUp() {
                             Password
                         </label>
                         <input
+                            disabled={isPending}
                             className="border border-gray-300  py-2 h-10 w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
                             placeholder="Password"
                             type="password"
@@ -110,8 +116,16 @@ export default function SignUp() {
                     <div className="flex justify-end">
                         <button
                             disabled={isPending}
-                            className="bg-clrTurtleGreen hover:bg-clrTurtleGreen/80 text-white font-semibold px-4 rounded-sm p-2 ">
-                            Sign up
+                            className={cn(
+                                "bg-clrTurtleGreen hover:bg-clrTurtleGreen/80 text-white font-semibold px-4 rounded-sm p-2 w-20",
+                                isPending &&
+                                    "cursor-not-allowed bg-clrTurtleGreen/80"
+                            )}>
+                            {isPending ? (
+                                <LoaderCircle className="animate-spin mx-auto" />
+                            ) : (
+                                <p>Sign up</p>
+                            )}
                         </button>
                     </div>
                 </form>

@@ -7,6 +7,7 @@ import { ITab, ITag } from "../../../types";
 import { useAuth } from "../../../context/auth-context";
 import TabItem from "../../../components/ui/tabs/tab-item";
 import { TAB_TYPE_ENUM } from "../../../utils/constants";
+import { LoaderCircle } from "lucide-react";
 
 export default function Home() {
     const { user } = useAuth();
@@ -68,8 +69,12 @@ export default function Home() {
                     </div>
                     <div className="md:col-span-2 bg-clrHarp p-2 space-y-2 rounded-md h-fit">
                         <p className="text-clrDoveGrey">Popular Tags</p>
-                        <div className="   rounded-md pb-4 flex flex-wrap gap-2 items-start">
-                            {isLoading && <p>Loading...</p>}
+                        <div className="rounded-md pb-4 flex flex-wrap gap-2 items-start">
+                            {isLoading && (
+                                <div className="grid place-content-center  w-full">
+                                    <LoaderCircle className="animate-spin text-clrTurtleGreen" />
+                                </div>
+                            )}
                             {!isLoading &&
                                 tags.map((tag) => {
                                     return (

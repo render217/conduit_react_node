@@ -41,32 +41,31 @@ export default function ArticleDetail() {
 
     const article = responseData?.data?.article as IArticle;
 
-    const {
-        mutateAsync: followUserAsync,
+    const { mutateAsync: followUserAsync, isPending: isFollowUserPending } =
+        useFollowUser();
 
-        // isPending: isFollowUserending,
-    } = useFollowUser();
-
-    const {
-        mutateAsync: unFollowUserAsync,
-        // isPending: isUnFollowUserPending
-    } = useUnFollowUser();
+    const { mutateAsync: unFollowUserAsync, isPending: isUnFollowUserPending } =
+        useUnFollowUser();
 
     const {
         mutateAsync: favoriteArticleAsync,
-        // isPending: isFavoriteArticlePending,
+        isPending: isFavoriteArticlePending,
     } = useFavoriteArticle();
 
     const {
         mutateAsync: unFavoriteArticleAsync,
-        // isPending: isUnFavoriteArticlePending,
+        isPending: isUnFavoriteArticlePending,
     } = useUnFavoriteArticle();
 
     const {
         mutateAsync: deleteArticleAsync,
         // isPending: isDeleteArticlePending,
     } = useDeleteArticle();
-
+    const isActionLoading =
+        isFollowUserPending ||
+        isUnFollowUserPending ||
+        isFavoriteArticlePending ||
+        isUnFavoriteArticlePending;
     const isSelf = user?.id.toString() === article?.author.id.toString();
     const isFollowed = article?.author.following;
     const isFavorited = article?.favorited;
@@ -79,7 +78,7 @@ export default function ArticleDetail() {
         try {
             await deleteArticleAsync(article?.slug);
             toast.success("successfully deleted article");
-            navigate(-1);
+            navigate("/");
         } catch (error) {
             handleError(error);
         }
@@ -139,6 +138,7 @@ export default function ArticleDetail() {
                 handleDelete={handleDelete}
                 isFavorited={isFavorited}
                 isFollowed={isFollowed}
+                isActionLoading={isActionLoading}
             />
             <div className="mx-auto max-w-[1200px] px-10 h-full pt-8 space-y-5">
                 <p className="text-lg">{article.body}</p>
@@ -183,6 +183,9 @@ export default function ArticleDetail() {
                                         <div className="flex gap-3">
                                             <ActionButton
                                                 onClick={handleEdit}
+                                                isActionLoading={
+                                                    isActionLoading
+                                                }
                                                 activeText="Edit Article"
                                                 inactiveText=""
                                                 isActive={true}
@@ -192,6 +195,9 @@ export default function ArticleDetail() {
                                             />
                                             <ActionButton
                                                 onClick={handleDelete}
+                                                isActionLoading={
+                                                    isActionLoading
+                                                }
                                                 activeText="Delete Article"
                                                 inactiveText=""
                                                 isActive={true}
@@ -206,6 +212,9 @@ export default function ArticleDetail() {
                                         <div className="flex gap-3">
                                             <ActionButton
                                                 onClick={handleFollow}
+                                                isActionLoading={
+                                                    isActionLoading
+                                                }
                                                 isActive={isFollowed}
                                                 icon={isFollowed ? Minus : Plus}
                                                 activeText={`UnFollow ${article.author.username}`}
@@ -215,6 +224,9 @@ export default function ArticleDetail() {
                                             />
                                             <ActionButton
                                                 onClick={handleFavorite}
+                                                isActionLoading={
+                                                    isActionLoading
+                                                }
                                                 isActive={isFavorited}
                                                 icon={
                                                     isFavorited ? Heart : Heart
@@ -245,6 +257,7 @@ function ArticleDetailBanner({
     isSelf,
     isFollowed,
     isFavorited,
+    isActionLoading,
     handleFavorite,
     handleFollow,
     handleEdit,
@@ -254,6 +267,7 @@ function ArticleDetailBanner({
     isSelf: boolean;
     isFollowed: boolean;
     isFavorited: boolean;
+    isActionLoading: boolean;
     handleFollow: () => void;
     handleFavorite: () => void;
     handleEdit: () => void;
@@ -298,6 +312,7 @@ function ArticleDetailBanner({
                             isSelf={isSelf}
                             isFavorited={isFavorited}
                             isFollowed={isFollowed}
+                            isActionLoading={isActionLoading}
                             handleFollow={handleFollow}
                             handleFavorite={handleFavorite}
                             handleEdit={handleEdit}
@@ -315,6 +330,7 @@ function ActionButtons({
     isSelf,
     isFollowed,
     isFavorited,
+    isActionLoading,
     handleEdit,
     handleDelete,
     handleFollow,
@@ -324,6 +340,7 @@ function ActionButtons({
     isSelf: boolean;
     isFollowed: boolean;
     isFavorited: boolean;
+    isActionLoading: boolean;
     handleDelete: () => void;
     handleEdit: () => void;
     handleFollow: () => void;
@@ -337,6 +354,7 @@ function ActionButtons({
                         <ActionButton
                             onClick={handleEdit}
                             activeText="Edit Article"
+                            isActionLoading={isActionLoading}
                             inactiveText=""
                             isActive={true}
                             activeClassName="border border-gray-500 hover:bg-clrGainsboro/40 hover:text-white text-clrDoveGrey"
@@ -345,6 +363,7 @@ function ActionButtons({
                         />
                         <ActionButton
                             onClick={handleDelete}
+                            isActionLoading={isActionLoading}
                             activeText="Delete Article"
                             inactiveText=""
                             isActive={true}
@@ -359,6 +378,7 @@ function ActionButtons({
                     <div className="flex gap-3">
                         <ActionButton
                             onClick={handleFollow}
+                            isActionLoading={isActionLoading}
                             isActive={isFollowed}
                             icon={isFollowed ? Minus : Plus}
                             activeText={`UnFollow ${article.author.username}`}
@@ -368,6 +388,7 @@ function ActionButtons({
                         />
                         <ActionButton
                             onClick={handleFavorite}
+                            isActionLoading={isActionLoading}
                             isActive={isFavorited}
                             icon={isFavorited ? Heart : Heart}
                             activeText={`UnFavorite Article (${article.favoritesCount})`}

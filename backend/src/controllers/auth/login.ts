@@ -29,7 +29,7 @@ const loginUser = async (req: Request, res: Response) => {
 
     if (!user) {
         return res.status(400).json({
-            message: "email or password is incorrect.(e not found)",
+            message: "Invalid credentials.",
         });
     }
 
@@ -37,7 +37,7 @@ const loginUser = async (req: Request, res: Response) => {
 
     if (!isPasswordValid) {
         return res.status(400).json({
-            message: "email or password is incorrect.(p not correct)",
+            message: "Invalid credentials.",
         });
     }
 

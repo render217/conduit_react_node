@@ -1,5 +1,3 @@
 export default function PublicRoute() {
-  return (
-    <div>PublicRoute</div>
-  )
+    return <div>PublicRoute</div>;
 }

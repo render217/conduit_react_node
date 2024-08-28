@@ -1,4 +1,4 @@
-import { Heart } from "lucide-react";
+import { Heart, LoaderCircle } from "lucide-react";
 import { IArticle } from "../../../types";
 import { Link } from "react-router-dom";
 
@@ -79,7 +79,12 @@ export default function ArticleCard({ article }: ArticleCardProps) {
                                 ? "bg-clrTurtleGreen text-white border-clrTurtleGreen"
                                 : "bg-transparent border border-clrTurtleGreen text-clrTurtleGreen"
                         )}>
-                        <Heart className="font-semibold  size-3.5" />
+                        {isFavoriteArticlePending ||
+                        isUnFavoriteArticlePending ? (
+                            <LoaderCircle className="font-semibold size-3.5 animate-spin" />
+                        ) : (
+                            <Heart className="font-semibold  size-3.5" />
+                        )}
                         <p className="font-semibold ">
                             {article.favoritesCount}
                         </p>

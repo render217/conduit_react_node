@@ -8,6 +8,7 @@ import { useLogin } from "../../services/queryhooks/user.hooks";
 
 import { handleError } from "../../utils/errorUtils";
 import { useAuth } from "../../context/auth-context";
+import { LoaderCircle } from "lucide-react";
 type FormData = {
     email: string;
     password: string;
@@ -35,6 +36,7 @@ export default function SignIn() {
     const { mutateAsync: loginAsync, isPending } = useLogin();
 
     const onSubmit = async (values: FormData) => {
+        if (isPending) return;
         try {
             const { data } = await loginAsync(values);
 
@@ -45,7 +47,6 @@ export default function SignIn() {
             navigate(location.state?.location ?? "/");
             setUser(data?.user);
             setIsLoggedIn(true);
-
             Cookies.set("con_token", data?.user?.token);
         } catch (error) {
             handleError(error);
@@ -71,6 +72,7 @@ export default function SignIn() {
                             Email
                         </label>
                         <input
+                            disabled={isPending}
                             className="border border-gray-300  py-2 h-10 w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
                             placeholder="Email"
                             type="email"
@@ -87,6 +89,7 @@ export default function SignIn() {
                             Password
                         </label>
                         <input
+                            disabled={isPending}
                             className="border border-gray-300  py-2 h-10 w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
                             placeholder="Password"
                             type="password"
@@ -102,11 +105,15 @@ export default function SignIn() {
                         <button
                             disabled={isPending}
                             className={cn(
-                                "bg-clrTurtleGreen hover:bg-clrTurtleGreen/80 text-white font-semibold px-4 rounded-sm p-2 ",
+                                "bg-clrTurtleGreen hover:bg-clrTurtleGreen/80 text-white font-semibold px-4 rounded-sm p-2 w-20",
                                 isPending &&
                                     "cursor-not-allowed bg-clrTurtleGreen/80"
                             )}>
-                            Sign In
+                            {isPending ? (
+                                <LoaderCircle className="animate-spin mx-auto" />
+                            ) : (
+                                <p>Sign In</p>
+                            )}
                         </button>
                     </div>
                 </form>

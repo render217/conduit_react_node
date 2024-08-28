@@ -11,6 +11,7 @@ import {
 import ArticleCard from "./article-card";
 import PageLoader from "../../../components/ui/loaders/page-loader";
 import Pagination from "../../../components/shared/pagination";
+import { Loader, LoaderCircle } from "lucide-react";
 // import ReactPaginate from "react-paginate";
 // import { CircleArrowLeft, CircleArrowRight } from "lucide-react";
 
@@ -40,7 +41,12 @@ export default function ArtilceList({ activeTab }: { activeTab: ITab }) {
         if (articles.length < itemPerPage) setCurrentPage(1);
     }, [articles, itemPerPage]);
 
-    if (isLoading) return <PageLoader />;
+    if (isLoading)
+        return (
+            <div className="grid place-content-center min-h-[200px]">
+                <LoaderCircle className="animate-spin text-clrTurtleGreen" />
+            </div>
+        );
     if (isError) return <p>Something went wrong</p>;
     return (
         <div>

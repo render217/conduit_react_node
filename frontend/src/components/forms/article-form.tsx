@@ -5,6 +5,8 @@ import { useCreateArticle } from "../../services/queryhooks/article.hooks";
 import { handleError } from "../../utils/errorUtils";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { LoaderCircle } from "lucide-react";
+import { cn } from "../../utils";
 type FormData = {
     title: string;
     description: string;
@@ -28,6 +30,7 @@ export default function ArticleForm() {
 
     const { mutateAsync: createArticleAsync, isPending } = useCreateArticle();
     const onSubmit = async (values: FormData) => {
+        if (isPending) return;
         try {
             const tagList = values.tag.trim().split(",");
             const payload = { ...values, tagList, tag: undefined };
@@ -50,7 +53,8 @@ export default function ArticleForm() {
                     Title
                 </label>
                 <input
-                    className="border border-gray-300  py-2 h-10 w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
+                    disabled={isPending}
+                    className="disabled:bg-gray-100 border border-gray-300  py-2 h-10 w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
                     placeholder="Article Title "
                     {...register("title")}
                 />
@@ -60,7 +64,8 @@ export default function ArticleForm() {
                     Description
                 </label>
                 <textarea
-                    className="border border-gray-300  py-2 h-[80px] w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
+                    disabled={isPending}
+                    className="disabled:bg-gray-100 border border-gray-300  py-2 h-[80px] w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
                     placeholder="What's this article about? "
                     {...register("description")}
                 />
@@ -70,7 +75,8 @@ export default function ArticleForm() {
                     Body
                 </label>
                 <textarea
-                    className="border border-gray-300  py-2 h-[150px] w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
+                    disabled={isPending}
+                    className="disabled:bg-gray-100 border border-gray-300  py-2 h-[150px] w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
                     placeholder="Write your article (in markdown) "
                     {...register("body")}
                 />
@@ -80,7 +86,8 @@ export default function ArticleForm() {
                     Tag
                 </label>
                 <input
-                    className="border border-gray-300 py-2 h-10 w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg"
+                    disabled={isPending}
+                    className="border border-gray-300 py-2 h-10 w-full rounded-md focus-visible:outline-clrTurtleGreen pl-5 text-lg disabled:bg-gray-100"
                     placeholder="Enter tags "
                     {...register("tag")}
                 />
@@ -88,8 +95,17 @@ export default function ArticleForm() {
             <div className="flex justify-end">
                 <button
                     disabled={isPending}
-                    className=" bg-clrTurtleGreen text-white p-2 rounded-md font-titilliumWeb hover:bg-clrTurtleGreen/80">
-                    Publish Article
+                    className={cn(
+                        " bg-clrTurtleGreen text-white p-2 rounded-md w-[120px] font-titilliumWeb hover:bg-clrTurtleGreen/80",
+                        isPending
+                            ? "bg-clrTurtleGreen/80 cursor-not-allowed"
+                            : ""
+                    )}>
+                    {isPending ? (
+                        <LoaderCircle className="animate-spin text-white mx-auto" />
+                    ) : (
+                        <p>Publish Article</p>
+                    )}
                 </button>
             </div>
         </form>
