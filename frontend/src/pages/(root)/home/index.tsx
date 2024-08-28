@@ -14,14 +14,14 @@ export default function Home() {
 
     const [tabs, setTabs] = useState<ITab[]>([
         {
-            label: `Your Feed`,
-            val: user?.username as string,
-            type: TAB_TYPE_ENUM.users_article.type,
-        },
-        {
             label: "Global Feed",
             val: "",
             type: TAB_TYPE_ENUM.global_feed.type,
+        },
+        {
+            label: `Your Feed`,
+            val: user?.username as string,
+            type: TAB_TYPE_ENUM.users_article.type,
         },
     ]);
 
