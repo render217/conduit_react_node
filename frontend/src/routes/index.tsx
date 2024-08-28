@@ -6,10 +6,8 @@ import { PRIVATE_ROUTES, PUBLIC_ROUTES } from "../constants";
 import MainLayout from "../layouts/main-layout";
 import NotFound from "../pages/(root)/NotFound";
 import PrivateRoute from "./private-route";
-import useRestorePreviousLocation from "../hooks/useRestorePreviousLocation";
 
 const AllRoutes = () => {
-    useRestorePreviousLocation();
     return (
         <>
             <Routes>
