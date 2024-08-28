@@ -48,7 +48,7 @@ export default function ArtilceList({ activeTab }: { activeTab: ITab }) {
     if (isError) return <p>Something went wrong</p>;
     return (
         <div>
-            <p>{activeTab.label}</p>
+            {/* <p>{activeTab.label}</p> */}
             <div className="space-y-10 rounded-md p-2">
                 {currentArticles.map((article) => (
                     <div

@@ -2,13 +2,18 @@ import { Router } from "express";
 
 import * as articlesCtrl from "../controllers/articles";
 import checkAuth from "../middleware/checkAuth";
+import checkAuthOptional from "../middleware/checkAuthOptional";
 const articleRoutes = Router();
 
 articleRoutes.get("/articles/feed", articlesCtrl.getArticlesFeed);
 
-articleRoutes.get("/articles", checkAuth, articlesCtrl.getArticles);
+articleRoutes.get("/articles", checkAuthOptional, articlesCtrl.getArticles);
 
-articleRoutes.get("/articles/:slug", checkAuth, articlesCtrl.getArticle);
+articleRoutes.get(
+    "/articles/:slug",
+    checkAuthOptional,
+    articlesCtrl.getArticle
+);
 
 articleRoutes.post("/articles", checkAuth, articlesCtrl.createArticle);
 

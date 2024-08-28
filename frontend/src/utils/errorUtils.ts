@@ -67,6 +67,7 @@ export const handleError = (error: unknown) => {
                     errorLogger(401, null);
                     toast.error("Unauthorized: Please log in to continue.");
                     // and do some redirect.
+                    window.location.href = "/login";
                     break;
                 case 403:
                     errorLogger(403, null);
@@ -88,14 +89,14 @@ export const handleError = (error: unknown) => {
             }
         } else if (error.request) {
             // The request was made, but no response was received
-            console.log("No response received:", error.request);
+            // console.log("No response received:", error.request);
         } else {
             // Something happened in setting up the request that triggered an Error
-            console.log("Error setting up request:", error.message);
+            // console.log("Error setting up request:", error.message);
         }
     } else {
         // Handle non-Axios errors (if any)
-        console.log("An unexpected error occurred:", error);
+        // console.log("An unexpected error occurred:", error);
     }
 };
 

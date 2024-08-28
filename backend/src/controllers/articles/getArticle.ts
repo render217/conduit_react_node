@@ -3,7 +3,7 @@ import { prisma } from "../../prisma/db";
 
 const getArticle = async (req: Request, res: Response) => {
     const { slug } = req.params;
-    const user = req.user;
+    // const user = req.user;
     const decodedSlug = decodeURIComponent(slug);
     console.log({ slug, decodedSlug });
     const article = await prisma.article.findFirst({
@@ -52,7 +52,7 @@ const getArticle = async (req: Request, res: Response) => {
 
             // followers: undefined,
         },
-        favorited: article.favoritedBy.some((x) => x.id === user?.id),
+        favorited: article.favoritedBy.some((x) => x.id === req?.user?.id),
         favoritesCount: article.favoritedBy.length,
         tagList: article.tags.map((tag) => tag.content),
         tags: undefined,

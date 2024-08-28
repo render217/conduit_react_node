@@ -23,13 +23,6 @@ export const PRIVATE_ROUTES = [
         element: <ArticleEdit />,
     },
     {
-        key: "article-detail",
-        label: "",
-        path: "/articles/:articleSlug",
-        icon: null,
-        element: <ArticleDetail />,
-    },
-    {
         key: "settings",
         label: "Settings",
         path: "/settings",
@@ -37,19 +30,20 @@ export const PRIVATE_ROUTES = [
         element: <Settings />,
     },
     // {
+    //     key: "article-detail",
+    //     label: "",
+    //     path: "/articles/:articleSlug",
+    //     icon: null,
+    //     element: <ArticleDetail />,
+    // },
+
+    // {
     //     key: "profile",
     //     label: "Profile",
-    //     path: "/profile",
+    //     path: "/profile/:username",
     //     icon: User,
     //     element: <Profile />,
     // },
-    {
-        key: "profile",
-        label: "Profile",
-        path: "/profile/:username",
-        icon: User,
-        element: <Profile />,
-    },
 ];
 
 export const PUBLIC_ROUTES = [
@@ -73,6 +67,21 @@ export const PUBLIC_ROUTES = [
         path: "/register",
         icon: null,
         element: <SignUp />,
+    },
+    {
+        key: "article-detail",
+        label: "",
+        path: "/articles/:articleSlug",
+        icon: null,
+        element: <ArticleDetail />,
+    },
+
+    {
+        key: "profile",
+        label: "Profile",
+        path: "/profile/:username",
+        icon: User,
+        element: <Profile />,
     },
 ];
 
