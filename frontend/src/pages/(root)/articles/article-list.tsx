@@ -1,18 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
-// import Pagination from "../../../components/shared/pagination";
+
 import { useGetArticles } from "../../../services/queryhooks/article.hooks";
 import { IArticle, ITab } from "../../../types";
-import {
-    getActiveTabQuery,
-    // getActiveTabQueryWithPagination,
-} from "../../../utils";
+import { getActiveTabQuery } from "../../../utils";
 import ArticleCard from "./article-card";
-import PageLoader from "../../../components/ui/loaders/page-loader";
-import Pagination from "../../../components/shared/pagination";
-import { Loader, LoaderCircle } from "lucide-react";
+
 // import ReactPaginate from "react-paginate";
+import Pagination from "../../../components/shared/pagination";
+import { LoaderCircle } from "lucide-react";
+
 // import { CircleArrowLeft, CircleArrowRight } from "lucide-react";
 
 export default function ArtilceList({ activeTab }: { activeTab: ITab }) {
