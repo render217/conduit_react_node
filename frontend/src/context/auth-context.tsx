@@ -43,7 +43,7 @@ export default function AuthProvider({
             .then((res) => {
                 setUser(res?.data);
                 setIsLoggedIn(true);
-                navigate({ pathname: location.state?.location });
+                navigate({ pathname: location.pathname || "/" });
             })
             .catch((_) => {
                 setIsLoggedIn(false);
